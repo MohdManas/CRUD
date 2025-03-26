@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { v4 as uuid } from "uuid";
 
@@ -14,6 +14,19 @@ export default function App() {
   });
 
   console.log(users);
+
+  useEffect(()=>{
+    const storedUsers = JSON.parse(localStorage.getItem('users'))
+    if (storedUsers){
+      setUsers(storedUsers)
+    }
+  },[])
+
+  useEffect(()=>{
+    localStorage.setItem('users',JSON.stringify(users))
+  },[users])
+  console.log(localStorage.getItem("users"));
+
 
   const addData = () => {
     setUsers((currUser) => [...currUser, userInfo]);
